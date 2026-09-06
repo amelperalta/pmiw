@@ -24,13 +24,13 @@ let altoSprite = 150;
 function preload() {
   fondo = loadImage("assets/fondo.png");
   
-  // chica6 y chica5 usadas para correr
+  
   for (let i = 0; i < framesCorrer.length; i++) {
     let num = 6 - i;
     framesCorrer[i] = loadImage("assets/chica" + num + ".png");
   }
   
-  // Asignación según la acción de cada imagen
+  
   for (let i = 0; i < framesPosturaBase.length; i++) {
     framesPosturaBase[i] = loadImage("assets/chica1.png");
   }
