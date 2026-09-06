@@ -1,18 +1,19 @@
 const ESTADO_CORRER        = 0;
-const ESTADO_SALTAR        = 1;
-const ESTADO_SERIO         = 2;
-const ESTADO_ENOJADO       = 3;
-const ESTADO_POSE          = 4;
-const ESTADO_CORRER_VOLVER = 5;
+const ESTADO_POSTURA_BASE  = 1;
+const ESTADO_ATAQUE_ESPADA = 2;
+const ESTADO_GUARDIA_BACULO= 3;
+const ESTADO_DOBLE_ESPADA  = 4;
+const ESTADO_POSE_FINAL    = 5;
 
 let estadoActual;
 
 let fondo;
-let animCorrer  = new Array(2);
-let animSaltar  = new Array(1);
-let animSerio   = new Array(1);
-let animEnojado = new Array(1);
-let animPose    = new Array(1);
+let framesCorrer       = new Array(2);
+let framesPosturaBase  = new Array(1);
+let framesAtaqueEspada = new Array(1);
+let framesGuardiaBaculo= new Array(1);
+let framesDobleEspada  = new Array(1);
+let framesPoseFinal    = new Array(1);
 
 let contadorTiempo = 0;
 let posX, posY;
@@ -23,22 +24,27 @@ let altoSprite = 150;
 function preload() {
   fondo = loadImage("assets/fondo.png");
   
-  for (let i = 0; i < animCorrer.length; i++) {
+  // chica6 y chica5 usadas para correr
+  for (let i = 0; i < framesCorrer.length; i++) {
     let num = 6 - i;
-    animCorrer[i] = loadImage("assets/chica" + num + ".png");
+    framesCorrer[i] = loadImage("assets/chica" + num + ".png");
   }
   
-  for (let i = 0; i < animSaltar.length; i++) {
-    animSaltar[i] = loadImage("assets/chica1.png");
+  // Asignación según la acción de cada imagen
+  for (let i = 0; i < framesPosturaBase.length; i++) {
+    framesPosturaBase[i] = loadImage("assets/chica1.png");
   }
-  for (let i = 0; i < animSerio.length; i++) {
-    animSerio[i] = loadImage("assets/chica2.png");
+  for (let i = 0; i < framesAtaqueEspada.length; i++) {
+    framesAtaqueEspada[i] = loadImage("assets/chica2.png");
   }
-  for (let i = 0; i < animEnojado.length; i++) {
-    animEnojado[i] = loadImage("assets/chica3.png");
+  for (let i = 0; i < framesGuardiaBaculo.length; i++) {
+    framesGuardiaBaculo[i] = loadImage("assets/chica3.png");
   }
-  for (let i = 0; i < animPose.length; i++) {
-    animPose[i] = loadImage("assets/chica4.png");
+  for (let i = 0; i < framesDobleEspada.length; i++) {
+    framesDobleEspada[i] = loadImage("assets/chica4.png");
+  }
+  for (let i = 0; i < framesPoseFinal.length; i++) {
+    framesPoseFinal[i] = loadImage("assets/chica5.png");
   }
 }
 
@@ -55,36 +61,36 @@ function draw() {
 
     case ESTADO_CORRER:
       posX -= 2.5;
-      dibujarAnimacion(animCorrer, posX, posY, anchoSprite, altoSprite, true);
+      dibujarAnimacion(framesCorrer, posX, posY, anchoSprite, altoSprite, true);
       if (posX <= 380) {
-        cambiarEstado(ESTADO_SALTAR);
+        cambiarEstado(ESTADO_POSTURA_BASE);
       }
       break;
       
-    case ESTADO_SALTAR:
+    case ESTADO_POSTURA_BASE:
       if (contadorTiempo < 50) {
         posY = posYBase - sin(radians(contadorTiempo * 3.6)) * 100;
       } else {
         posY = posYBase;
       }
-      dibujarAnimacion(animSaltar, posX, posY, anchoSprite, altoSprite, true);
+      dibujarAnimacion(framesPosturaBase, posX, posY, anchoSprite, altoSprite, true);
       break;
       
-    case ESTADO_SERIO:
-      dibujarAnimacion(animSerio, posX, posY, anchoSprite, altoSprite, true);
+    case ESTADO_ATAQUE_ESPADA:
+      dibujarAnimacion(framesAtaqueEspada, posX, posY, anchoSprite, altoSprite, true);
       break;
       
-    case ESTADO_ENOJADO:
-      dibujarAnimacion(animEnojado, posX, posY, anchoSprite, altoSprite, true);
+    case ESTADO_GUARDIA_BACULO:
+      dibujarAnimacion(framesGuardiaBaculo, posX, posY, anchoSprite, altoSprite, true);
       break;
       
-    case ESTADO_POSE:
-      dibujarAnimacion(animPose, posX, posY, anchoSprite, altoSprite, true);
+    case ESTADO_DOBLE_ESPADA:
+      dibujarAnimacion(framesDobleEspada, posX, posY, anchoSprite, altoSprite, true);
       break;
 
-    case ESTADO_CORRER_VOLVER:
+    case ESTADO_POSE_FINAL:
       posX += 3;
-      dibujarAnimacion(animCorrer, posX, posY, anchoSprite, altoSprite, false);
+      dibujarAnimacion(framesPoseFinal, posX, posY, anchoSprite, altoSprite, false);
       
       if (posX > width + 100) {
         reiniciarEscena();
@@ -95,17 +101,17 @@ function draw() {
 
 function mousePressed() {
   if (estadoActual === ESTADO_CORRER) {
-    cambiarEstado(ESTADO_SALTAR);
-  } else if (estadoActual === ESTADO_SALTAR) {
+    cambiarEstado(ESTADO_POSTURA_BASE);
+  } else if (estadoActual === ESTADO_POSTURA_BASE) {
     posY = posYBase;
-    cambiarEstado(ESTADO_SERIO);
-  } else if (estadoActual === ESTADO_SERIO) {
-    cambiarEstado(ESTADO_ENOJADO);
-  } else if (estadoActual === ESTADO_ENOJADO) {
-    cambiarEstado(ESTADO_POSE);
-  } else if (estadoActual === ESTADO_POSE) {
-    cambiarEstado(ESTADO_CORRER_VOLVER);
-  } else if (estadoActual === ESTADO_CORRER_VOLVER) {
+    cambiarEstado(ESTADO_ATAQUE_ESPADA);
+  } else if (estadoActual === ESTADO_ATAQUE_ESPADA) {
+    cambiarEstado(ESTADO_GUARDIA_BACULO);
+  } else if (estadoActual === ESTADO_GUARDIA_BACULO) {
+    cambiarEstado(ESTADO_DOBLE_ESPADA);
+  } else if (estadoActual === ESTADO_DOBLE_ESPADA) {
+    cambiarEstado(ESTADO_POSE_FINAL);
+  } else if (estadoActual === ESTADO_POSE_FINAL) {
     reiniciarEscena();
   }
 }
