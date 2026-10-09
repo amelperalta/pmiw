@@ -32,23 +32,23 @@ let totalPantallas = 17;
 
 function preload() {
   let nombresArchivos = [
-    'obbard.jpg',          // 0 (Corregido en minúscula)
-    'camino.jpg',          // 1
-    'klein.jpg',           // 2
-    'sradumont.jpg',       // 3
-    'agentekgb.jpg',       // 4
-    'agentekgb2.jpg',      // 5 
-    'antonhuyendo.jpg',    // 6
-    'mckimcarta.jpg',      // 7
-    'agentesubmarino.jpg', // 8
-    'infiltracionivan.jpg',// 9
-    'cavernasecreta.jpg',  // 10
-    'cayendotrampa.jpg',   // 11
-    'atrapadoagua.jpg',    // 12
-    'entregacintas.jpg',   // 13
-    'finalcaverna.jpg',    // 14
-    'salvadoballena.jpg',  // 15
-    'reservanatural.jpg'   // 16
+    'obbard.jpg'          
+    'camino.jpg'         
+    'klein.jpg'          
+    'sradumont.jpg'       
+    'agentekgb.jpg'       
+    'agentekgb2.jpg'      
+    'antonhuyendo.jpg'    
+    'mckimcarta.jpg'      
+    'agentesubmarino.jpg' 
+    'infiltracionivan.jpg'
+    'cavernasecreta.jpg'  
+    'cayendotrampa.jpg'   
+    'atrapadoagua.jpg'   
+    'entregacintas.jpg'   
+    'finalcaverna.jpg'    
+    'salvadoballena.jpg' 
+    'reservanatural.jpg'   
   ];
 
   for (let i = 0; i < totalPantallas; i++) {
@@ -118,7 +118,7 @@ function draw() {
     }
   }
 
-  // BOTONES DE DECISIÓN SEGÚN FLUJO
+  
   if (estado === 1) { dibujarDosBotones("Ir a Cambridge", "Entrevistar Sra DuMont"); }
   else if (estado === 2) { dibujarDosBotones("Proteger copia MIT", "Buscar carta robada"); }
   else if (estado === 3) { dibujarDosBotones("Recurso militar", "Milagro natural"); }
